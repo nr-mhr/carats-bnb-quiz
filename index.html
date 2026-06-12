@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CARATs BNB Vibe Check</title>
+  <style>
+    :root {
+      --rose: #f7cac9;
+      --rose-2: #ffdce2;
+      --serenity: #92a8d1;
+      --serenity-2: #dce7ff;
+      --purple: #7d6fb3;
+      --purple-2: #eee7ff;
+      --cream: #fff8ee;
+      --mint: #def7ef;
+      --white: #ffffff;
+      --ink: #303040;
+      --muted: #6f6f7a;
+      --shadow: 0 22px 60px rgba(55, 57, 95, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.75), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(255, 248, 238, 0.75), transparent 23%),
+        radial-gradient(circle at 50% 96%, rgba(238, 231, 255, 0.85), transparent 28%),
+        linear-gradient(135deg, var(--rose) 0%, #f9d6dc 35%, #dbe5ff 68%, var(--serenity) 100%);
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.88);
+      border-radius: 36px;
+      padding: 36px 28px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "💎";
+      position: absolute;
+      font-size: 118px;
+      opacity: 0.10;
+      top: -28px;
+      left: 22px;
+      transform: rotate(-18deg);
+    }
+
+    .hero::after {
+      content: "🩷";
+      position: absolute;
+      font-size: 110px;
+      opacity: 0.12;
+      bottom: -34px;
+      right: 24px;
+      transform: rotate(14deg);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      color: #594e96;
+      letter-spacing: -1px;
+    }
+
+    .tagline {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 740px;
+      margin: 16px auto 0;
+    }
+
+    .pill-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .pill {
+      background: linear-gradient(135deg, var(--rose), var(--serenity));
+      color: white;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 7px 16px rgba(111, 134, 189, 0.25);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 30px;
+      padding: 24px;
+      margin-top: 22px;
+      box-shadow: 0 14px 35px rgba(55, 57, 95, 0.16);
+      border: 2px solid rgba(255, 255, 255, 0.88);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 8px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--rose), var(--serenity), var(--purple-2));
+    }
+
+    .name-card {
+      background: linear-gradient(135deg, #fff, var(--cream));
+    }
+
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+
+    .q-title {
+      font-size: 21px;
+      color: #514987;
+      margin-bottom: 14px;
+      padding-top: 4px;
+    }
+
+    .q-number {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--purple-2);
+      margin-right: 8px;
+      color: #514987;
+      font-weight: 900;
+      box-shadow: inset 0 0 0 2px rgba(125, 111, 179, 0.12);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      border: 2px solid #e5dcff;
+      border-radius: 18px;
+      padding: 15px 16px;
+      font-size: 16px;
+      outline: none;
+      background: white;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--serenity);
+      box-shadow: 0 0 0 4px rgba(146, 168, 209, 0.2);
+    }
+
+    .meme-box {
+      margin: 14px 0 16px;
+      border-radius: 24px;
+      border: 2px dashed #cfc4f5;
+      background: linear-gradient(135deg, var(--cream), #f5efff);
+      min-height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      color: var(--purple);
+      font-weight: 900;
+      padding: 18px;
+    }
+
+    .meme-box img {
+      width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      border-radius: 20px;
+      display: none;
+    }
+
+    .meme-box.has-image {
+      padding: 0;
+      background: #ffffff;
+      border-style: solid;
+    }
+
+    .meme-box.has-image .meme-note {
+      display: none;
+    }
+
+    .meme-box.has-image img {
+      display: block;
+    }
+
+    .meme-note {
+      font-size: 14px;
+      color: var(--purple);
+      line-height: 1.5;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    label.option {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--cream);
+      border: 2px solid transparent;
+      border-radius: 18px;
+      padding: 14px 15px;
+      cursor: pointer;
+      transition: 0.16s ease;
+      line-height: 1.45;
+      font-size: 16px;
+    }
+
+    label.option:hover {
+      transform: translateY(-2px);
+      background: #f5efff;
+      border-color: #d8cafb;
+    }
+
+    input[type="radio"] {
+      margin-top: 4px;
+      accent-color: var(--purple);
+      transform: scale(1.1);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 24px;
+      padding: 18px 20px;
+      margin-top: 24px;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(135deg, #e8a6ae, var(--purple), #6f86bd);
+      box-shadow: 0 14px 30px rgba(125, 111, 179, 0.28);
+      transition: 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(125, 111, 179, 0.34);
+    }
+
+    .error {
+      display: none;
+      background: #fff1f1;
+      border: 2px solid #ffc1c1;
+      color: #a50021;
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 16px;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .result {
+      display: none;
+      margin-top: 24px;
+      padding: 30px;
+      text-align: center;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(247, 202, 201, 0.45), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(146, 168, 209, 0.45), transparent 30%),
+        #ffffff;
+      border: 3px dashed #9587c9;
+      box-shadow: var(--shadow);
+    }
+
+    .result-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rose), var(--serenity));
+      color: white;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .result h2 {
+      color: #514987;
+      font-size: clamp(26px, 4vw, 42px);
+      margin: 10px 0;
+    }
+
+    .result-type {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--purple);
+      margin: 18px 0;
+    }
+
+    .result p {
+      line-height: 1.7;
+      font-size: 17px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .screenshot-note {
+      margin-top: 18px;
+      background: var(--cream);
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 900;
+    }
+
+    .tiny {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      color: rgba(48, 48, 64, 0.7);
+      font-size: 13px;
+      margin: 26px 0 6px;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 12px;
+      }
+
+      .hero,
+      .card,
+      .result {
+        border-radius: 24px;
+        padding: 20px;
+      }
+
+      .tagline {
+        font-size: 15px;
+      }
+
+      .q-title {
+        font-size: 18px;
+      }
+
+      label.option {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+HOW TO ADD YOUR SVT MEMES:
+1. Put image files in the same folder as this HTML file.
+2. Find the meme-box under each question.
+3. Change <div class="meme-box"> to <div class="meme-box has-image">
+4. Change <img src="memes/" ...> to your image file name, example:
+   <img src="memes/q1-meme.jpg" alt="Question 1 meme">
+-->
+  <div class="wrap">
+    <section class="hero">
+      <h1>CARATs BNB Vibe Check</h1>
+      <p class="tagline">
+        Answer this mini quiz honestly, dramatically, or somewhere in between.
+        No pressure, just homestay chaos. Screenshot your result at the end and upload it in the Google Form. 👀✨
+      </p>
+    </section>
+
+    <section class="card name-card">
+      <h3>Before we start...</h3>
+      <input type="text" id="participantName" placeholder="Your name / nickname" />
+    </section>
+
+    <form id="quizForm">
+
+      <section class="card">
+        <h3 class="q-title"><span class="q-number">1</span>During homestay, you are most likely to...</h3>
+        <div class="meme-box has-image">
+          <div class="meme-note">🖼️ Meme Placeholder Q1<br>Example meme: everyone entering homestay / chaos starts
+          </div>
+         <img src="memes/seventeen ot13.jpeg" alt="Question 1 meme">
+        </div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q1" value="wonwoo">Tidur dulu 😴</label>
+          <label class="option"><input type="radio" name="q1" value="mingyu">Cari makanan 🍜</label>
+          <label class="option"><input type="radio" name="q1" value="hoshi">Ajak karaoke 🎤</label>
+          <label class="option"><input type="radio" name="q1" value="scoups">Tolong kemas-kemas 🧹</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="q-title"><span class="q-number">2</span>If everyone suddenly quiet, you will...</h3>
+        <div class="meme-box has-image">
+          <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+          </div>
+          <img src="memes/_ (9).jpeg" alt="Question 2 meme">
+        </div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q2" value="seungkwan">Start borak random topic 🗣️</label>
+          <label class="option"><input type="radio" name="q2" value="dk">Play song / karaoke 🎶</label>
+          <label class="option"><input type="radio" name="q2" value="vernon">Just scroll phone 📱</label>
+          <label class="option"><input type="radio" name="q2" value="jun">Wait someone else start dulu 😭</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="q-title"><span class="q-number">3</span>During games, you are...</h3>
+        <div class="meme-box has-image">
+          <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+          </div>
+          <img src="memes/_ (9) copy.jpeg" alt="Question 3 meme">
+        </div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q3" value="scoups">Competitive gila 😤</label>
+          <label class="option"><input type="radio" name="q3" value="joshua">Main for fun je 😆</label>
+          <label class="option"><input type="radio" name="q3" value="dino">Blur tapi join 🤣</label>
+          <label class="option"><input type="radio" name="q3" value="hoshi">The one buat kecoh 🎭</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="q-title"><span class="q-number">4</span>When someone asks for help, you...</h3>
+        <div class="meme-box has-image">
+          <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+          </div>
+          <img src="memes/_ (9) copy 2.jpeg" alt="Question 4 meme">
+        </div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q4" value="dk">Help terus 💪</label>
+          <label class="option"><input type="radio" name="q4" value="mingyu">Help if I know how 🤔</label>
+          <label class="option"><input type="radio" name="q4" value="jeonghan">Cari orang lain yang lagi pandai
+            👀</label>
+          <label class="option"><input type="radio" name="q4" value="dino">Panic dulu baru tolong 😭</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="q-title"><span class="q-number">5</span>Pick your homestay vibe:</h3>
+        <div class="meme-box has-image">
+          <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+          </div>
+          <img src="memes/∗ˈ‧₊° seventeen ∗ˈ‧₊°.jpeg" alt="Question 5 meme">
+        </div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q5" value="dk">Karaoke sampai suara hilang 🎤</label>
+          <label class="option"><input type="radio" name="q5" value="mingyu">Chill makan-makan 🍜</label>
+          <label class="option"><input type="radio" name="q5" value="seungkwan">Main game sampai gaduh 🎮</label>
+          <label class="option"><input type="radio" name="q5" value="minghao">Ambil video sampai storage penuh
+            📹</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="q-title"><span class="q-number">6</span>If food sampai, you are...</h3>
+        <<div class="meme-box has-image">
+          <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+          </div> <img src="memes/The8 (1).jpeg" alt="Question 6 meme">
+  </div>
+  <div class="options">
+    <label class="option"><input type="radio" name="q6" value="mingyu">First in line 🍽️</label>
+    <label class="option"><input type="radio" name="q6" value="joshua">Wait everyone take first 🩷</label>
+    <label class="option"><input type="radio" name="q6" value="minghao">Busy ambil gambar/video makanan 📸</label>
+    <label class="option"><input type="radio" name="q6" value="vernon">"Siapa nak share?" 😌</label>
+  </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">7</span>If plan suddenly changes, you...</h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+      </div> <img src="memes/_ (9) copy 3.jpeg" alt="Question 7 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q7" value="vernon">Okay je, ikut flow 😎</label>
+      <label class="option"><input type="radio" name="q7" value="scoups">Need new plan cepat 📋</label>
+      <label class="option"><input type="radio" name="q7" value="woozi">Slightly panic 😭</label>
+      <label class="option"><input type="radio" name="q7" value="wonwoo">Tengok je drama berlaku 🍿</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">8</span>Which one sounds like you?</h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+      </div>
+      <img src="memes/_ (9) copy 4.jpeg" alt="Question 8 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q8" value="scoups">I can lead if needed 👑</label>
+      <label class="option"><input type="radio" name="q8" value="hoshi">I bring the fun 🎉</label>
+      <label class="option"><input type="radio" name="q8" value="wonwoo">I quietly observe 👀</label>
+      <label class="option"><input type="radio" name="q8" value="dk">I just want everyone comfortable 🩷</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">9</span>A friend asks for your honest opinion on something they made.
+    </h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+      </div>
+      <img src="memes/new seventeen meme unlocked 😭.jpeg" alt="Question 9 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q9" value="minghao">Tell them exactly what you think
+        😌</label>
+      <label class="option"><input type="radio" name="q9" value="joshua">Be honest, but say it gently 🩷</label>
+      <label class="option"><input type="radio" name="q9" value="seungkwan">Give feedback, encouragement, and a full
+        presentation 🤣</label>
+      <label class="option"><input type="radio" name="q9" value="woozi">Keep it short and straight to the point
+        👍</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">10</span>Which role would you naturally take in a group project?</h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+      </div> <img src="memes/like mine 🫂.jpeg" alt="Question 10 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q10" value="scoups">Team leader 👑</label>
+      <label class="option"><input type="radio" name="q10" value="woozi">The one with all the ideas 💡</label>
+      <label class="option"><input type="radio" name="q10" value="mingyu">The one making sure everything gets done
+        ✅</label>
+      <label class="option"><input type="radio" name="q10" value="dk">The one who somehow becomes everyone's
+        emotional support 🫂</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">11</span>Imagine everyone is arguing over where to eat.</h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+      </div> <img src="memes/q11.jpeg" alt="Question 11 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q11" value="scoups">Decide for everyone before someone starves
+        🍜</label>
+      <label class="option"><input type="radio" name="q11" value="jeonghan">Find the most efficient solution
+        🔍</label>
+      <label class="option"><input type="radio" name="q11" value="vernon">Just go wherever sounds good 😌</label>
+      <label class="option"><input type="radio" name="q11" value="wonwoo">Sit back and enjoy the debate 🍿</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">12</span>What kind of compliment do you receive most often?</h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
+      </div> <img src="memes/seventeen memes.jpeg" alt="Question 12 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q12" value="mingyu">"You're reliable." 💪</label>
+      <label class="option"><input type="radio" name="q12" value="hoshi">"You're funny." 😂</label>
+      <label class="option"><input type="radio" name="q12" value="woozi">"You're smart." 🧠</label>
+      <label class="option"><input type="radio" name="q12" value="joshua">"You're easy to talk to." 🩷</label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="q-title"><span class="q-number">13</span>If your friends were describing you to a stranger, they'd
+      probably say:</h3>
+    <div class="meme-box has-image">
+      <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: friend describing you badly</div>
+      <img src="memes/q13.jpeg" alt="Question 13 meme">
+    </div>
+    <div class="options">
+      <label class="option"><input type="radio" name="q13" value="dk">"They'll take care of you." 🤝</label>
+      <label class="option"><input type="radio" name="q13" value="jun">"They're a bit random, but in a good way."
+        🤣</label>
+      <label class="option"><input type="radio" name="q13" value="wonwoo">"They're quieter than you think."
+        👀</label>
+      <label class="option"><input type="radio" name="q13" value="vernon">"They're 100% themselves." ✨</label>
+    </div>
+  </section>
+
+  <button class="btn" type="button" onclick="calculateResult()">Reveal My Vibe ✨</button>
+  <div class="error" id="errorMsg">Bestie, answer all questions first 😭</div>
+  </form>
+
+  <section class="result" id="resultBox">
+    <div class="result-badge">RESULT UNLOCKED</div>
+    <h2 id="resultHeading">Interesting...</h2>
+    <div class="result-type" id="resultType"></div>
+    <p id="resultDesc"></p>
+    <div class="screenshot-note">
+      Please screenshot this result and upload it in the Google Form 💎
+    </div>
+    <div class="tiny">
+      No overthinking. Just trust the process. 👀
+    </div>
+  </section>
+
+  <footer>Made for CARATs BNB 💎🩷</footer>
+  </div>
+
+  <script>
+    const results = {
+      scoups: {
+        type: "The Reliable One",
+        desc: "You give strong “I did not ask for this responsibility, but fine, I will handle it” energy. People probably look at you when things get serious. You may act tough, but the softie agenda is showing."
+      },
+      jeonghan: {
+        type: "The Work Smarter One",
+        desc: "You are not lazy. You are efficient. Somehow you can look suspiciously relaxed while still getting the result. If there is a shortcut, loophole, or smarter route, you will probably find it first."
+      },
+      joshua: {
+        type: "The Gentle Plot Twist",
+        desc: "You seem calm, sweet, and easygoing at first. Then suddenly there is a tiny chaos gremlin moment and everyone realizes they underestimated you. Soft outside, suspiciously funny inside."
+      },
+      jun: {
+        type: "The Randomly Memorable One",
+        desc: "You are the kind of person people cannot fully predict, and honestly, that is your charm. You may disappear into your own world for a bit, then come back with something unexpectedly thoughtful."
+      },
+      hoshi: {
+        type: "The Loudest One",
+        desc: "Your energy has entered the room before you did. You are likely to make things louder, funnier, and slightly more chaotic. If the gathering gets too quiet, you might become everyone’s problem."
+      },
+      wonwoo: {
+        type: "The Quiet Observer",
+        desc: "You may not say much at first, but you are definitely noticing everything. While people are busy panicking, you are probably observing, processing, and judging quietly for entertainment."
+      },
+      woozi: {
+        type: "The Nonchalant Perfectionist",
+        desc: "You look like you do not care, but the standard is secretly very high. You are focused, practical, and probably care more than you let on. Emotional? Maybe. Publicly admitting it? Absolutely not."
+      },
+      dk: {
+        type: "The Softest Heart",
+        desc: "You are dangerously kind. The type to help first and think later. People feel comfortable around you, but please be careful because your kindness may put you at risk of being scammed emotionally."
+      },
+      mingyu: {
+        type: "The Skilled Disaster",
+        desc: "You are useful in almost every situation. Cooking? Helping? Fixing things? Somehow yes. But there is also a non-zero chance you trip over air while doing it. Capable and clumsy is a powerful combo."
+      },
+      minghao: {
+        type: "The Honest Philosopher",
+        desc: "You see things from your own angle and you are not afraid to say what you think. Sometimes wise, sometimes savage, always very you. People may ask for honesty and then regret receiving it."
+      },
+      seungkwan: {
+        type: "The Social Radar",
+        desc: "You somehow know everyone, everything, and every detail. Loud? Maybe. Caring? Definitely. You bring conversation, energy, and emotional intelligence into the room whether people are ready or not."
+      },
+      vernon: {
+        type: "The Authentically You One",
+        desc: "You are not trying to fit into anyone’s box, and that is the point. You move through things with quiet confidence, unique thoughts, and a very specific vibe that only makes sense because it is yours."
+      },
+      dino: {
+        type: "The Fighting Maknae Energy",
+        desc: "You give hardworking, funny, constantly-being-tested-by-life energy. Even when people tease you, you still show up, try again, and make it entertaining. Growth arc unlocked."
+      }
+    };
+
+    function calculateResult() {
+      const questions = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13"];
+      const scores = {};
+      Object.keys(results).forEach(k => scores[k] = 0);
+
+      for (const q of questions) {
+        const chosen = document.querySelector(`input[name="${q}"]:checked`);
+        if (!chosen) {
+          document.getElementById("errorMsg").style.display = "block";
+          document.getElementById("resultBox").style.display = "none";
+          return;
+        }
+        scores[chosen.value] += 1;
+      }
+
+      document.getElementById("errorMsg").style.display = "none";
+
+      const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
+      const name = document.getElementById("participantName").value.trim();
+      const result = results[winner];
+
+      document.getElementById("resultHeading").textContent = name ? `${name}, interesting...` : "Interesting...";
+      document.getElementById("resultType").textContent = result.type;
+      document.getElementById("resultDesc").textContent = result.desc;
+      document.getElementById("resultBox").style.display = "block";
+      document.getElementById("resultBox").scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
+</body>
+
+</html>
