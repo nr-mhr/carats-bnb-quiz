@@ -395,7 +395,8 @@ HOW TO ADD YOUR SVT MEMES:
 
     <section class="card name-card">
       <h3>Before we start...</h3>
-      <input type="text" id="participantName" placeholder="Your name / nickname" / required>
+      <input type="text" id="participantName" placeholder="Your name / nickname" required />
+      <div class="tiny">Please use the same name you entered in the Google Form 💎</div>
     </section>
 
     <form id="quizForm">
@@ -479,7 +480,7 @@ HOW TO ADD YOUR SVT MEMES:
 
       <section class="card">
         <h3 class="q-title"><span class="q-number">6</span>If food sampai, you are...</h3>
-        <<div class="meme-box has-image">
+        <div class="meme-box has-image">
           <div class="meme-note">🖼️ Meme Placeholder Q2<br>Example meme: awkward silence / someone starts nonsense
           </div> <img src="memes/The8 (1).jpeg" alt="Question 6 meme">
   </div>
@@ -679,6 +680,17 @@ HOW TO ADD YOUR SVT MEMES:
     };
 
     function calculateResult() {
+      const name = document.getElementById("participantName").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (!name) {
+        errorMsg.style.display = "block";
+        errorMsg.innerText = "Bestie, please enter your name / nickname first 😭";
+        document.getElementById("resultBox").style.display = "none";
+        document.getElementById("participantName").focus();
+        return;
+      }
+
       const questions = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13"];
       const scores = {};
       Object.keys(results).forEach(k => scores[k] = 0);
@@ -686,25 +698,27 @@ HOW TO ADD YOUR SVT MEMES:
       for (const q of questions) {
         const chosen = document.querySelector(`input[name="${q}"]:checked`);
         if (!chosen) {
-          document.getElementById("errorMsg").style.display = "block";
+          errorMsg.style.display = "block";
+          errorMsg.innerText = "Bestie, answer all questions first 😭";
           document.getElementById("resultBox").style.display = "none";
           return;
         }
         scores[chosen.value] += 1;
       }
 
-      document.getElementById("errorMsg").style.display = "none";
+      errorMsg.style.display = "none";
+      errorMsg.innerText = "Bestie, answer all questions first 😭";
 
       const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
-      const name = document.getElementById("participantName").value.trim();
       const result = results[winner];
 
-      document.getElementById("resultHeading").textContent = name ? `${name}, interesting...` : "Interesting...";
+      document.getElementById("resultHeading").textContent = `✨ ${name} ✨`;
       document.getElementById("resultType").textContent = result.type;
       document.getElementById("resultDesc").textContent = result.desc;
       document.getElementById("resultBox").style.display = "block";
       document.getElementById("resultBox").scrollIntoView({ behavior: "smooth" });
     }
+
   </script>
 </body>
 
